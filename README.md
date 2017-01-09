@@ -13,7 +13,7 @@ On OS X, with homebrew
 
 ```
 brew update
-brew install ghchinoy/roguewave/atmotool
+brew install ghchinoy/roguewave/rwctl
 ```
 
 On Windows, with scoop
