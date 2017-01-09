@@ -27,8 +27,8 @@ import (
 // profilesCmd represents the profiles command
 var profileCmd = &cobra.Command{
 	Use:   "profile",
-	Short: "List profile details",
-	Long: `List the details for a named profile.`,
+	Short: "profile information",
+	Long: `List the details for a named profile as well as available profile configurations`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// debug, list out profile information
 		fmt.Printf("%7s: %s\n", "profile", profile)

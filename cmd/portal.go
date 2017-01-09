@@ -19,22 +19,26 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// apisCmd represents the apis command
-var apisCmd = &cobra.Command{
-	Use:   "apis",
-	Short: "api commands",
-	Long: `commands to manage apis`,
+// cmspathtarget is used in upload, download commands
+var cmspathtarget string
+
+// portalCmd represents the portal command
+var portalCmd = &cobra.Command{
+	Use:   "portal",
+	Short: "portal commands",
+	Long: `commands to control the API Portal and associated CMS`,
+
 }
 
 func init() {
-	RootCmd.AddCommand(apisCmd)
+	RootCmd.AddCommand(portalCmd)
 
-	apisCmd.PersistentFlags().StringVar(&cfgFile, "config", "", cfgHelp)
-	apisCmd.PersistentFlags().StringVar(&profile, "profile", "default", "profile name")
-	apisCmd.PersistentFlags().BoolVar(&debug, "debug", false, "debug output")
+	portalCmd.PersistentFlags().StringVar(&cfgFile, "config", "", cfgHelp)
+	portalCmd.PersistentFlags().StringVar(&profile, "profile", "default", "profile name")
+	portalCmd.PersistentFlags().BoolVar(&debug, "debug", false, "debug output")
 	// Set bash-completion
 	validConfigFilenames := []string{"toml", ""}
-	apisCmd.PersistentFlags().SetAnnotation("config", cobra.BashCompFilenameExt, validConfigFilenames)
+	portalCmd.PersistentFlags().SetAnnotation("config", cobra.BashCompFilenameExt, validConfigFilenames)
 
 
 }

@@ -1,7 +1,7 @@
 package version
 
 const (
-	version     = "0.1.0"
+	version     = "0.2.0"
 	versionName = "cirrus"
 )
 
@@ -11,15 +11,15 @@ func Version() string {
 }
 
 /* in 1000s of ft
-lenticular 20 -130
-cirrus 20 - 39
-cirrostratus 20 - 39
-cirrocumulus 18 - 20
-altostratus 15 - 20
-altocumulus 7.9 - 20
-cumulonumbus 4.9 - 50
-cumulus 2 - 9.8
-stratocumulus 1.5 - 6.6
-nimbostratus 0 - 9.8
-stratus 0 - 6.8
+lenticular 	20  -130
+cirrus 		20  - 39
+cirrostratus 	20  - 39
+cirrocumulus 	18  - 20
+altostratus 	15  - 20
+altocumulus 	7.9 - 20
+cumulonumbus 	4.9 - 50
+cumulus 	2   - 9.8
+stratocumulus 	1.5 - 6.6
+nimbostratus 	0   - 9.8
+stratus 	0   - 6.8
 */
