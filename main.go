@@ -21,6 +21,6 @@ import (
 var VERSION string = "v0.1.0"
 
 func main() {
-	cmd.Version(VERSION)
+	cmd.SetVersion(VERSION)
 	cmd.Execute()
 }

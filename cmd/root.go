@@ -39,7 +39,8 @@ var RootCmd = &cobra.Command{
 //	Run: func(cmd *cobra.Command, args []string) { },
 }
 
-func Version(v string) {
+// SetVersion sets the version for use within cmd package
+func SetVersion(v string) {
 	VERSION = v
 }
 
