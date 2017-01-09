@@ -41,7 +41,7 @@ On Windows, with scoop
 
 ### Option 2 - Download from GitHub release
 
-View the [releases](/releases) page for the `rwctl` GitHub project, and find the appropriate archive for your operating system and architecture. (For OS X systems, remember to use the darwin archive.)
+View the [releases](https://github.com/ghchinoy/rwctl/releases) page for the `rwctl` GitHub project, and find the appropriate archive for your operating system and architecture. (For OS X systems, remember to use the darwin archive.)
 
 ### Option 3 - From source
 
