@@ -20,6 +20,8 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/spf13/viper"
+	"sort"
+	"strings"
 )
 
 // profilesCmd represents the profiles command
@@ -41,6 +43,11 @@ var profileCmd = &cobra.Command{
 		} else {
 			fmt.Printf("No %s profile exists in config file %s.", profile, cfgFile)
 		}
+		fmt.Println()
+		allprofiles := viper.AllKeys()
+		sort.Strings(allprofiles)
+
+		fmt.Println("Valid profiles are:",  strings.Join(allprofiles, ", "))
 	},
 }
 
