@@ -16,11 +16,10 @@ package main
 
 import (
 	"github.com/ghchinoy/rwctl/cmd"
+	"github.com/ghchinoy/rwctl/version"
 )
 
-var VERSION string = "v0.1.0"
-
 func main() {
-	cmd.SetVersion(VERSION)
+	cmd.SetVersion(version.Version())
 	cmd.Execute()
 }

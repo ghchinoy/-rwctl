@@ -26,6 +26,7 @@ var cfgFile string
 const cfgHelp = `config file (default is $HOME/.config/roguewave/rwctl.toml)`
 var profile string
 var VERSION string
+var debug bool
 
 // RootCmd represents the base command when called without any subcommands
 var RootCmd = &cobra.Command{
