@@ -28,18 +28,16 @@ var profileCmd = &cobra.Command{
 	Short: "List profile details",
 	Long: `List the details for a named profile.`,
 	Run: func(cmd *cobra.Command, args []string) {
-
 		// debug, list out profile information
-
 		fmt.Printf("%7s: %s\n", "profile", profile)
 		if viper.IsSet(profile) {
 			p := viper.GetStringMap(profile)
 			for k, v := range p {
+				// don't show password
 				if k != "password" {
 					fmt.Printf("%7s: %s\n", k,v)
 				}
 			}
-
 		} else {
 			fmt.Printf("No %s profile exists in config file %s.", profile, cfgFile)
 		}

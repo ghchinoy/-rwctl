@@ -11,6 +11,11 @@ go install github.com/ghchinoy/rwctl
 
 On OS X, with homebrew
 
+```
+brew update
+brew install ghchinoy/roguewave/atmotool
+```
+
 On Windows, with scoop
 
 

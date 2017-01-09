@@ -1,4 +1,4 @@
-// Copyright © 2016 NAME HERE <EMAIL ADDRESS>
+// Copyright © 2017 G. Hussain Chinoy <ghchinoy@gmail.com>
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,15 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package cmd
 
 import (
-	"github.com/ghchinoy/rwctl/cmd"
+	"fmt"
+
+	"github.com/spf13/cobra"
 )
 
-var VERSION string = "v0.1.0"
+// versionCmd represents the version command
+var versionCmd = &cobra.Command{
+	Use:   "version",
+	Short: "Version info for rwctl",
+	Long: `Version info for rogue wave api management platform cli, rwctl`,
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Printf("rwctl version %s", VERSION)
+	},
+}
 
-func main() {
-	cmd.Version(VERSION)
-	cmd.Execute()
+func init() {
+	RootCmd.AddCommand(versionCmd)
 }
