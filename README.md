@@ -54,12 +54,12 @@ Download the archive from your browser or copy the URL and retrieve it via `wget
 
 ```
 # OS X
-curl -L https://github.com/ghchinoy/rwctl/releases/download/v0.3.0/rwctl-0.3.0.tar.gz | tar xz
+curl -L https://github.com/ghchinoy/rwctl/releases/download/v0.2.1/rwctl-0.2.1.tar.gz | tar xz
 
 # linux, wget
-wget -q0- https://github.com/ghchinoy/rwctl/releases/download/v0.3.0/rwctl-0.3.0-linux.amd64
+wget -q0- https://github.com/ghchinoy/rwctl/releases/download/v0.2.1/rwctl-0.2.1-linux.amd64
 # linux, curl
-curl -L https://github.com/ghchinoy/rwctl/releases/download/v0.3.0/rwctl-0.3.0-linux.amd64
+curl -L https://github.com/ghchinoy/rwctl/releases/download/v0.2.1/rwctl-0.2.1-linux.amd64
 ```
 
 Rename the binary (as necessary) to `rwctl` and move the `rwctl` binary to your path. Example:
@@ -70,7 +70,7 @@ sudo mv ./rwctl /usr/local/bin
 
 **Windows**
 
-Download the [Windows release](https://github.com/ghchinoy/rwctl/releases/download/v0.3.0/rwctl-0.3.0-windows.amd64.exe) (link is for 0.2.0, check [releases](https://github.com/ghchinoy/rwctl/releases) for latest) and rename to `rwctl.exe`
+Download the [Windows release](https://github.com/ghchinoy/rwctl/releases/download/v0.2.1/rwctl-0.2.1-windows.amd64.exe) (link is for 0.2.0, check [releases](https://github.com/ghchinoy/rwctl/releases) for latest) and rename to `rwctl.exe`
 
 ### Option 3 - Build from source
 
