@@ -56,11 +56,13 @@ Install `rwctl`:
 scoop install rwctl
 ```
 
-Create a config (if you don't have one); see below for format (example, shown using `nano`, which can be installed via `scoop install nano`):
+Create a config (if you don't have one); see below for format. 
+
+Example, shown using `nano`, which can be installed via `scoop install nano`:
 
 ```
 new-item -path ~\.config\roguewave -type directory
-nano .config\roguewave\rwctl.toml
+nano ~\.config\roguewave\rwctl.toml
 ```
 
 Refer to [scoop.sh](http://scoop.sh/) for more info on scoop.
