@@ -70,7 +70,7 @@ sudo mv ./rwctl /usr/local/bin
 
 **Windows**
 
-Download the [Windows release](https://github.com/ghchinoy/rwctl/releases/download/v0.2.1/rwctl-0.2.1-windows.amd64.exe) (link is for 0.2.0, check [releases](https://github.com/ghchinoy/rwctl/releases) for latest) and rename to `rwctl.exe`
+Download the [Windows release](https://github.com/ghchinoy/rwctl/releases/download/v0.2.1/rwctl-0.2.1-windows.amd64.exe) (link is for 0.2.1, check [releases](https://github.com/ghchinoy/rwctl/releases) for latest) and rename to `rwctl.exe`
 
 ### Option 3 - Build from source
 
