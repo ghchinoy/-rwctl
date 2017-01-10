@@ -26,7 +26,7 @@ var versionCmd = &cobra.Command{
 	Short: "show the current version",
 	Long: `Version info for rogue wave api management platform cli, rwctl`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf("rwctl version %s", VERSION)
+		fmt.Printf("rwctl version %s\n", VERSION)
 	},
 }
 
