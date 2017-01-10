@@ -33,16 +33,38 @@ OS X, Linux, and Windows binaries are available.
 ### Option 1 - Use a package manager (preferred)
 
 
-On OS X, with homebrew
+**On OS X, with homebrew**
 
 ```
 brew update
 brew install ghchinoy/roguewave/rwctl
 ```
 
-On Windows, with scoop
+**On Windows, with scoop:**
 
-(coming soon)
+Add the bucket:
+
+```
+scoop bucket add roguewave https://github.com/ghchinoy/scoop-roguewave
+scoop bucket list
+scoop search rwctl
+```
+
+Install `rwctl`:
+
+```
+scoop install rwctl
+```
+
+Create a config (if you don't have one); see below for format (example, shown using `nano`, which can be installed via `scoop install nano`):
+
+```
+new-item -path ~\.config\roguewave -type directory
+nano .config\roguewave\rwctl.toml
+```
+
+Refer to [scoop.sh](http://scoop.sh/) for more info on scoop.
+
 
 ### Option 2 - Download a release from GitHub
 
