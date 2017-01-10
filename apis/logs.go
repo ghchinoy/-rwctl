@@ -6,7 +6,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/ghchinoy/atmotool/control"
+	"github.com/ghchinoy/rwctl/control"
 )
 
 const (

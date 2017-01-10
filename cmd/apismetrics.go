@@ -19,59 +19,51 @@ import (
 
 	"github.com/spf13/cobra"
 	"os"
+	"github.com/ghchinoy/rwctl/apis"
 	"github.com/spf13/viper"
-	"github.com/ghchinoy/rwctl/portal"
 	"github.com/ghchinoy/rwctl/control"
 )
 
-// uploadCmd uploads a file or files to the Portal's CMS path
-var uploadCmd = &cobra.Command{
-	Use:   "upload <file...>",
-	Short: "upload a file or files to the portal cms",
-	Long: `upload a file or files to the portal cms`,
+// metricsCmd represents the metrics command
+var metricsCmd = &cobra.Command{
+	Use:   "metrics <apiid>",
+	Short: "display metrics for an api",
+	Long: `summary metrics for an api over a period of time, shows avg, min, max, total calls, total successes, and total failures`,
 	Run: func(cmd *cobra.Command, args []string) {
-		if len(args) == 0 {
-			fmt.Println("a file (or files) argument is required. See -h help.")
-			os.Exit(1)
-		}
-		if cmspathtarget == "" {
-			fmt.Println("a CMS path target defined by --path flag is required. See -h help.")
-			os.Exit(1)
-		}
-		//fmt.Println("uploading", args, "to", cmspathtarget)
-
 		var cfgmap map[string]interface{}
 		var config control.Configuration
 
 		if viper.IsSet(profile) {
 			cfgmap = viper.GetStringMap(profile)
 		} else {
-			fmt.Println("Cannot find profile", profile, "in configuration.")
+			fmt.Println("Cannot find profile", profile, " Please check configuration.")
 			os.Exit(1)
 		}
 
+		if len(args) == 0 {
+			fmt.Println("an API ID must be given. Please see -h help.")
+			os.Exit(1)
+		}
 		config, err := control.ViperToConfiguration(cfgmap, debug)
 		if err != nil {
 			fmt.Println("Error translating config", err.Error())
 		} else {
-			portal.UploadFiles(args, config, cmspathtarget, debug)
+			apis.APIMetrics(args[0], config, debug)
 		}
 	},
 }
 
 func init() {
-	portalCmd.AddCommand(uploadCmd)
+	apisCmd.AddCommand(metricsCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// uploadCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// metricsCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// uploadCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-
-	uploadCmd.Flags().StringVarP(&cmspathtarget, "path", "p" , "","CMS path target")
+	// metricsCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 
 }

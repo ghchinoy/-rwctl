@@ -7,7 +7,7 @@ Currently, there is no Contributor License Agreement (CLA), but there may be one
 
 ## Commands vs Implementation
 
-Commands for the cli are in the `cmd` package, but most implementations are in separate packages. Please follow this convention, so that command implementations can be tested separately from the cli commands themselves.
+Commands for the cli are in the `cmd` package, with implementationn in separate packages. Please follow this convention - keeping logic outside of commands - so that command implementations can be tested separately from the cli itself.
 
 To add a command, use the [cobra](https://github.com/spf13/cobra) cli convention `cobra add [commandname]`
 

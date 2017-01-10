@@ -3,7 +3,7 @@ package apis
 import (
 	"log"
 
-	"github.com/ghchinoy/atmotool/control"
+	"github.com/ghchinoy/rwctl/control"
 )
 
 const (

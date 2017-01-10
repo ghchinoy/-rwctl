@@ -10,8 +10,8 @@ import (
 
 	"strings"
 
-	"github.com/ghchinoy/atmotool/cm"
-	"github.com/ghchinoy/atmotool/control"
+	"github.com/ghchinoy/rwctl/cm"
+	"github.com/ghchinoy/rwctl/control"
 )
 
 const (

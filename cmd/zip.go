@@ -20,7 +20,7 @@ import (
 	"github.com/spf13/cobra"
 	"os"
 	"strings"
-	"github.com/ghchinoy/atmotool/zip"
+	"github.com/ghchinoy/rwctl/zip"
 )
 
 var prefix string

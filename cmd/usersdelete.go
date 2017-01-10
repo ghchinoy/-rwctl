@@ -18,60 +18,55 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
-	"os"
 	"github.com/spf13/viper"
-	"github.com/ghchinoy/rwctl/portal"
+	"os"
 	"github.com/ghchinoy/rwctl/control"
+	"github.com/ghchinoy/rwctl/users"
 )
 
-// uploadCmd uploads a file or files to the Portal's CMS path
-var uploadCmd = &cobra.Command{
-	Use:   "upload <file...>",
-	Short: "upload a file or files to the portal cms",
-	Long: `upload a file or files to the portal cms`,
+// deleteuserCmd represents the deleteuser command
+var deleteuserCmd = &cobra.Command{
+	Use:   "delete <userid>",
+	Short: "delete a user from the platform",
+	Long: `delete a user from the API Platform`,
 	Run: func(cmd *cobra.Command, args []string) {
-		if len(args) == 0 {
-			fmt.Println("a file (or files) argument is required. See -h help.")
-			os.Exit(1)
-		}
-		if cmspathtarget == "" {
-			fmt.Println("a CMS path target defined by --path flag is required. See -h help.")
-			os.Exit(1)
-		}
-		//fmt.Println("uploading", args, "to", cmspathtarget)
-
 		var cfgmap map[string]interface{}
 		var config control.Configuration
 
 		if viper.IsSet(profile) {
 			cfgmap = viper.GetStringMap(profile)
 		} else {
-			fmt.Println("Cannot find profile", profile, "in configuration.")
+			fmt.Println("Cannot find profile", profile, " Please check configuration.")
 			os.Exit(1)
 		}
 
+		if len(args) == 0 {
+			fmt.Println("an user or list of users must be given. Please see -h help.")
+			os.Exit(1)
+		}
 		config, err := control.ViperToConfiguration(cfgmap, debug)
 		if err != nil {
 			fmt.Println("Error translating config", err.Error())
 		} else {
-			portal.UploadFiles(args, config, cmspathtarget, debug)
+			err := users.DeleteUserList(args, config, debug)
+			if err != nil {
+				fmt.Println(err.Error())
+			}
 		}
 	},
 }
 
 func init() {
-	portalCmd.AddCommand(uploadCmd)
+	usersCmd.AddCommand(deleteuserCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// uploadCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// deleteuserCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// uploadCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-
-	uploadCmd.Flags().StringVarP(&cmspathtarget, "path", "p" , "","CMS path target")
+	// deleteuserCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 
 }

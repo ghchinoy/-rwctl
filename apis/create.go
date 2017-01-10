@@ -9,9 +9,9 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/ghchinoy/atmotool/cm"
-	"github.com/ghchinoy/atmotool/control"
-	"github.com/ghchinoy/atmotool/dropbox"
+	"github.com/ghchinoy/rwctl/cm"
+	"github.com/ghchinoy/rwctl/control"
+	"github.com/ghchinoy/rwctl/dropbox"
 )
 
 const (
@@ -81,7 +81,7 @@ func CreateAPIfromExistingService(name string, serviceID string, config control.
 // http://docs.akana.com/cm/api/apis/m_apis_createAPI.htm
 // this happens in two steps, first uploading the spec to the CMS staging area,
 // and then adding the API, referring to the uploaded spec
-// This is invoked by: atmotool apis create APINAME --spec PATH_TO_SPECFILE
+// This is invoked by: rwctl apis create APINAME --spec PATH_TO_SPECFILE
 func CreateAPIwithSpec(name string, specpath string, config control.Configuration, debug bool) error {
 	if debug {
 		log.Printf("Adding API - from spec: '%s' (%s)\n", name, specpath)

@@ -10,8 +10,11 @@ Usage:
 
 Available Commands:
   apis        api commands
+  apps        app commands
+  policies    policies commands
   portal      portal commands
   profile     profile information
+  users       users commands
   version     show the current version
   zip         convenience compression
 
@@ -24,6 +27,8 @@ Use "rwctl [command] --help" for more information about a command.
 
 
 ## Install
+
+OS X, Linux, and Windows binaries are available.
 
 ### Option 1 - Use a package manager (preferred)
 
@@ -39,7 +44,7 @@ On Windows, with scoop
 
 (coming soon)
 
-### Option 2 - Download from GitHub release
+### Option 2 - Download a release from GitHub
 
 View the [releases](https://github.com/ghchinoy/rwctl/releases) page for the `rwctl` GitHub project, and find the appropriate archive for your operating system and architecture. (For OS X systems, remember to use the darwin archive.)
 
@@ -67,7 +72,7 @@ sudo mv ./rwctl /usr/local/bin
 
 Download the [Windows release](https://github.com/ghchinoy/rwctl/releases/download/v0.2.0/rwctl-0.2.0-windows.amd64.exe) (link is for 0.2.0, check [releases](https://github.com/ghchinoy/rwctl/releases) for latest) and rename to `rwctl.exe`
 
-### Option 3 - From source
+### Option 3 - Build from source
 
 If you have a Go environment configured, install source like so:
 
@@ -127,6 +132,17 @@ rwctl portal upload custom.less -p /resources/theme/hermosa/less
 rwctl portal rebuild
 ```
 
+* add an API to the platform, proxying a backend
+
+```
+rwctl apis create "JSON Placeholder" --endpoint https://jsonplaceholder.typicode.com/
+```
+
+* add an API to the platform with an OAI spec
+
+```
+rwctl apis create "Petstore from cli" --spec petstore.json
+```
 
 ## Contributions
 

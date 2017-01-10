@@ -1,4 +1,4 @@
-// Copyright © 2017 G. Hussain Chinoy
+// Copyright © 2017 G. Hussain Chinoy <ghchinoy@gmail.com>
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,16 +18,16 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
-	"github.com/ghchinoy/rwctl/apis"
-	"github.com/ghchinoy/rwctl/control"
 	"github.com/spf13/viper"
+	"github.com/ghchinoy/rwctl/apps"
+	"github.com/ghchinoy/rwctl/control"
 )
 
-// listCmd represents the list command
-var listCmd = &cobra.Command{
+// appslistCmd represents the appslist command
+var appslistCmd = &cobra.Command{
 	Use:   "list",
-	Short: "lists apis",
-	Long: `lists apis available on the API platform`,
+	Short: "list apps on the platform",
+	Long: `list apps on the api platform`,
 	Run: func(cmd *cobra.Command, args []string) {
 		var cfgmap map[string]interface{}
 		var config control.Configuration
@@ -40,12 +40,12 @@ var listCmd = &cobra.Command{
 		if err != nil {
 			fmt.Println("Error translating config", err.Error())
 		} else {
-			apis.APIList(config, debug)
+			apps.ListApps(config, debug)
 		}
 	},
 }
 
 func init() {
-	apisCmd.AddCommand(listCmd)
+	appsCmd.AddCommand(appslistCmd)
 
 }
