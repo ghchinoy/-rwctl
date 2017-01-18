@@ -23,7 +23,11 @@ import (
 	"os"
 )
 
-var showinactivepolicies bool
+var (
+	showinactivepolicies bool
+	outputformat string
+)
+
 
 // policieslistCmd represents the policieslist command
 var policieslistCmd = &cobra.Command{
@@ -51,7 +55,7 @@ var policieslistCmd = &cobra.Command{
 		} else {
 			policytypes = args
 		}
-		err = policies.ListPolicies(policytypes, showinactivepolicies, config, debug)
+		err = policies.ListPolicies(policytypes, showinactivepolicies, outputformat, config, debug)
 		if err != nil {
 			fmt.Println(err.Error())
 		}
@@ -62,5 +66,6 @@ var policieslistCmd = &cobra.Command{
 func init() {
 	policiesCmd.AddCommand(policieslistCmd)
 	policieslistCmd.Flags().BoolVarP(&showinactivepolicies, "inactive", "i" , false,"show inactive policies")
+	policieslistCmd.Flags().StringVar(&outputformat, "output", "text", "output format (default: text; json)")
 
 }

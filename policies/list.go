@@ -46,7 +46,7 @@ func sliceContains(a []string, t string) bool {
 
 // ListPolicies outputs a list of policies and their IDs
 // should show a more human readable output
-func ListPolicies(types []string, showinactivepolicies bool, config control.Configuration, debug bool) error {
+func ListPolicies(types []string, showinactivepolicies bool, outputformat string, config control.Configuration, debug bool) error {
 	if debug {
 		log.Println("Listing Policies of type:", types)
 	}
@@ -63,7 +63,7 @@ func ListPolicies(types []string, showinactivepolicies bool, config control.Conf
 	if types[0] == "all" { // all
 		for _, policyType := range policyTypes {
 
-			err := outputPolicyTypeListing(policyType, showinactivepolicies, config, debug)
+			err := outputPolicyTypeListing(policyType, showinactivepolicies, outputformat, config, debug)
 			if err != nil {
 				fmt.Println("Unable to retrieve polices of type", policyType, err.Error())
 			}
@@ -71,7 +71,7 @@ func ListPolicies(types []string, showinactivepolicies bool, config control.Conf
 	} else { // only the ones chosen
 		for _, t := range types {
 			firstletter := strings.Split(strings.ToLower(t), "")[0]
-			err := outputPolicyTypeListing(policymap[firstletter], showinactivepolicies, config, debug)
+			err := outputPolicyTypeListing(policymap[firstletter], showinactivepolicies, outputformat, config, debug)
 			if err != nil {
 				fmt.Println("Unable to retrieve polices of type", t, err.Error())
 			}
@@ -84,15 +84,13 @@ func ListPolicies(types []string, showinactivepolicies bool, config control.Conf
 	return nil
 }
 
-func outputPolicyTypeListing(policyType string, showinactivepolicies bool, config control.Configuration, debug bool) error {
+func outputPolicyTypeListing(policyType string, showinactivepolicies bool, outputformat string, config control.Configuration, debug bool) error {
 
 	client, _, err := control.LoginToCM(config, debug)
 	if err != nil {
 		log.Fatalln(err)
 		return err
 	}
-
-
 
 	url := config.URL + PoliciesGetURI + "?Type=" + url.QueryEscape(policyType)
 	if showinactivepolicies {
@@ -131,15 +129,24 @@ func outputPolicyTypeListing(policyType string, showinactivepolicies bool, confi
 		inactive = "(Inactive)."
 	}
 
-	fmt.Printf("%v %s Policies %s\n", len(policies.Channel.Items), policyType, inactive)
-	fmt.Println("---------------------------------")
-	pattern := "%-45s %s\n"
-	fmt.Printf(pattern, "ID", "Title")
+	if outputformat == "json" {
+		jsondata, err := json.Marshal(policies.Channel.Items)
+		if err != nil {
+			fmt.Println("Can't JSON")
+		}
+		fmt.Printf("%s\n", jsondata)
 
-	if len(policies.Channel.Items) > 1 {
-		//log.Printf("%s", bodyBytes)
-		for _, v := range policies.Channel.Items {
-			fmt.Printf(pattern, v.Guid.Value, v.Title)
+	}  else {
+		fmt.Printf("%v %s Policies %s\n", len(policies.Channel.Items), policyType, inactive)
+		fmt.Println("---------------------------------")
+		pattern := "%-45s %s\n"
+		fmt.Printf(pattern, "ID", "Title")
+
+		if len(policies.Channel.Items) > 1 {
+			//log.Printf("%s", bodyBytes)
+			for _, v := range policies.Channel.Items {
+				fmt.Printf(pattern, v.Guid.Value, v.Title)
+			}
 		}
 	}
 
