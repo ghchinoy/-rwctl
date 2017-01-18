@@ -23,11 +23,13 @@ import (
 	"os"
 )
 
+var showinactivepolicies bool
+
 // policieslistCmd represents the policieslist command
 var policieslistCmd = &cobra.Command{
-	Use:   "list",
+	Use:   "list [policyType]",
 	Short: "list policies on the platform",
-	Long:  `list policies available on the platform`,
+	Long:  `list policies available on the platform, can provide an optional policyType: Operational, SLA, Compliance, or DOS. Without the policy type, all policy types are returned.`,
 	Run: func(cmd *cobra.Command, args []string) {
 
 		var cfgmap map[string]interface{}
@@ -43,13 +45,13 @@ var policieslistCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		var policytypes string
+		var policytypes []string
 		if len(args) == 0 {
-			policytypes = "all"
+			policytypes = []string{"all"}
 		} else {
-			policytypes = args[0]
+			policytypes = args
 		}
-		err = policies.ListPolicies(policytypes, config, debug)
+		err = policies.ListPolicies(policytypes, showinactivepolicies, config, debug)
 		if err != nil {
 			fmt.Println(err.Error())
 		}
@@ -59,5 +61,6 @@ var policieslistCmd = &cobra.Command{
 
 func init() {
 	policiesCmd.AddCommand(policieslistCmd)
+	policieslistCmd.Flags().BoolVarP(&showinactivepolicies, "inactive", "i" , false,"show inactive policies")
 
 }

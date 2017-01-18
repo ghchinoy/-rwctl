@@ -10,6 +10,7 @@ import (
 
 	"github.com/ghchinoy/rwctl/cm"
 	"github.com/ghchinoy/rwctl/control"
+	"strings"
 )
 
 const (
@@ -45,10 +46,45 @@ func sliceContains(a []string, t string) bool {
 
 // ListPolicies outputs a list of policies and their IDs
 // should show a more human readable output
-func ListPolicies(types string, config control.Configuration, debug bool) error {
+func ListPolicies(types []string, showinactivepolicies bool, config control.Configuration, debug bool) error {
 	if debug {
 		log.Println("Listing Policies of type:", types)
 	}
+
+	policymap := make(map[string]string)
+	policymap["o"] = "Operational Policy"
+	policymap["d"] = "Denial of Service"
+	policymap["s"] = "Service Level Policy"
+	policymap["c"] = "Compliance Policy"
+
+	policyTypes := []string{"Operational Policy", "Denial of Service", "Compliance Policy", "Service Level Policy"}
+
+
+	if types[0] == "all" { // all
+		for _, policyType := range policyTypes {
+
+			err := outputPolicyTypeListing(policyType, showinactivepolicies, config, debug)
+			if err != nil {
+				fmt.Println("Unable to retrieve polices of type", policyType, err.Error())
+			}
+		}
+	} else { // only the ones chosen
+		for _, t := range types {
+			firstletter := strings.Split(strings.ToLower(t), "")[0]
+			err := outputPolicyTypeListing(policymap[firstletter], showinactivepolicies, config, debug)
+			if err != nil {
+				fmt.Println("Unable to retrieve polices of type", t, err.Error())
+			}
+		}
+
+	}
+
+
+
+	return nil
+}
+
+func outputPolicyTypeListing(policyType string, showinactivepolicies bool, config control.Configuration, debug bool) error {
 
 	client, _, err := control.LoginToCM(config, debug)
 	if err != nil {
@@ -56,57 +92,55 @@ func ListPolicies(types string, config control.Configuration, debug bool) error 
 		return err
 	}
 
-	policyTypes := []string{"Operational Policy", "Denial of Service", "Compliance Policy", "Service Level Policy"}
 
-	if sliceContains(policyTypes, types) {
-		policyTypes = []string{types}
+
+	url := config.URL + PoliciesGetURI + "?Type=" + url.QueryEscape(policyType)
+	if showinactivepolicies {
+		url = url + "IncludeInactivePolicies=true"
+	}
+	//log.Printf("* %s\n", url)
+
+	//client := &http.Client{}
+	req, err := http.NewRequest("GET", url, nil)
+	req.Header.Add("Accept", "application/json")
+
+	if debug {
+		log.Println("Calling", url)
+		control.DebugRequestHeader(req)
 	}
 
-	for _, policyType := range policyTypes {
-		if debug {
-			log.Printf("%s\n", policyType)
+	resp, err := client.Do(req)
+
+	defer resp.Body.Close()
+
+	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+	if debug {
+		control.DebugResponseHeader(resp)
+	}
+	var policies cm.ApisResponse
+	err = json.Unmarshal(bodyBytes, &policies)
+	if debug {
+		log.Println("Found", len(policies.Channel.Items), " policies.")
+	}
+
+	inactive := "."
+	if showinactivepolicies {
+		inactive = "(Inactive)."
+	}
+
+	fmt.Printf("%v %s Policies %s\n", len(policies.Channel.Items), policyType, inactive)
+	fmt.Println("---------------------------------")
+	pattern := "%-45s %s\n"
+	fmt.Printf(pattern, "ID", "Title")
+
+	if len(policies.Channel.Items) > 1 {
+		//log.Printf("%s", bodyBytes)
+		for _, v := range policies.Channel.Items {
+			fmt.Printf(pattern, v.Guid.Value, v.Title)
 		}
-		url := config.URL + PoliciesGetURI + "?Type=" + url.QueryEscape(policyType)
-		//log.Printf("* %s\n", url)
-
-		//client := &http.Client{}
-		req, err := http.NewRequest("GET", url, nil)
-		req.Header.Add("Accept", "application/json")
-
-		if debug {
-			log.Println("Calling", url)
-			control.DebugRequestHeader(req)
-		}
-
-		resp, err := client.Do(req)
-
-		defer resp.Body.Close()
-
-		bodyBytes, err := ioutil.ReadAll(resp.Body)
-		if err != nil {
-			return err
-		}
-		if debug {
-			control.DebugResponseHeader(resp)
-		}
-		var policies cm.ApisResponse
-		err = json.Unmarshal(bodyBytes, &policies)
-		if debug {
-			log.Println("Found", len(policies.Channel.Items), " policies.")
-		}
-
-		fmt.Printf("%v %s Policies.\n", len(policies.Channel.Items), policyType)
-		fmt.Println("---------------------------------")
-		pattern := "%-45s %s\n"
-		fmt.Printf(pattern, "ID", "Title")
-
-		if len(policies.Channel.Items) > 1 {
-			//log.Printf("%s", bodyBytes)
-			for _, v := range policies.Channel.Items {
-				fmt.Printf(pattern, v.Guid.Value, v.Title)
-			}
-		}
-
 	}
 
 	return nil
