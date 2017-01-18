@@ -126,18 +126,18 @@ func outputPolicyTypeListing(policyType string, showinactivepolicies bool, outpu
 
 	inactive := "."
 	if showinactivepolicies {
-		inactive = "(Inactive)."
+		inactive = " (Inactive)."
 	}
 
 	if outputformat == "json" {
 		jsondata, err := json.Marshal(policies.Channel.Items)
-		if err != nil {
-			fmt.Println("Can't JSON")
+		if err != nil { // this would be odd to get here, as this is just remarshalling the API response
+			fmt.Println("Can't convert to json JSON")
 		}
 		fmt.Printf("%s\n", jsondata)
 
 	}  else {
-		fmt.Printf("%v %s Policies %s\n", len(policies.Channel.Items), policyType, inactive)
+		fmt.Printf("%v %s Policies%s\n", len(policies.Channel.Items), policyType, inactive)
 		fmt.Println("---------------------------------")
 		pattern := "%-45s %s\n"
 		fmt.Printf(pattern, "ID", "Title")
