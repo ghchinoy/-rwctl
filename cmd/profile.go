@@ -44,10 +44,10 @@ var profileCmd = &cobra.Command{
 			fmt.Printf("No %s profile exists in config file %s.", profile, cfgFile)
 		}
 		fmt.Println()
-		allprofiles := viper.AllKeys()
-		sort.Strings(allprofiles)
+		profiles := viper.AllKeys()
+		sort.Strings(profiles)
 
-		fmt.Println("Valid profiles are:",  strings.Join(allprofiles, ", "))
+		fmt.Println("Valid profiles are:",  strings.Join(profiles, ", "))
 	},
 }
 
