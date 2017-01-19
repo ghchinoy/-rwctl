@@ -28,7 +28,9 @@ import (
 var profileCmd = &cobra.Command{
 	Use:   "profile [profile]",
 	Short: "profile information",
-	Long: `List the details for a named profile as well as available profile configurations found in the .rwctl configuration file. Defaults to 'default'`,
+	Long: `List the details for a named profile as well as available profile
+configurations found in the .rwctl configuration file.
+Defaults to 'default' profile.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) > 0 {
 			profile = args[0]

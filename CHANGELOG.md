@@ -1,5 +1,8 @@
 # Changelog
 
+### 0.2.4 2017018
+
+* Added naming of profile to check with `profile` cmd
 
 ### 0.2.3 20170118
 
