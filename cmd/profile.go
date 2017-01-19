@@ -26,10 +26,13 @@ import (
 
 // profilesCmd represents the profiles command
 var profileCmd = &cobra.Command{
-	Use:   "profile",
+	Use:   "profile [profile]",
 	Short: "profile information",
-	Long: `List the details for a named profile as well as available profile configurations`,
+	Long: `List the details for a named profile as well as available profile configurations found in the .rwctl configuration file. Defaults to 'default'`,
 	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) > 0 {
+			profile = args[0]
+		}
 		// debug, list out profile information
 		fmt.Printf("%7s: %s\n", "profile", profile)
 		if viper.IsSet(profile) {
@@ -46,8 +49,11 @@ var profileCmd = &cobra.Command{
 		fmt.Println()
 		profiles := viper.AllKeys()
 		sort.Strings(profiles)
+		// remove "profile" default
+		profileposition := sort.SearchStrings(profiles, "profile")
+		profiles = append(profiles[:profileposition], profiles[profileposition+1:]...)
 
-		fmt.Println("Valid profiles are:",  strings.Join(profiles, ", "))
+		fmt.Println("Valid profiles:",  strings.Join(profiles, ", "))
 	},
 }
 
