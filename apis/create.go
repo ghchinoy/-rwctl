@@ -89,7 +89,9 @@ func CreateAPIwithSpec(name string, specpath string, config control.Configuratio
 	// first, upload the spec doc to the CMS
 	specresponse, err := dropbox.AddSpecToDropbox(config, specpath, debug)
 	if err != nil {
-		log.Println(err.Error())
+		if debug {
+			log.Println("error adding|parsing spec", err.Error())
+		}
 		return err
 	}
 	// then, create a request with that info

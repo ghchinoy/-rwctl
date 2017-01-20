@@ -76,7 +76,10 @@ var apiscreateCmd = &cobra.Command{
 				// Create using a provied spec
 				// --spec SPECFILE
 				// TODO
-				apis.CreateAPIwithSpec(apiName, spec, config, debug)
+				err := apis.CreateAPIwithSpec(apiName, spec, config, debug)
+				if err != nil {
+					fmt.Println("Error in creating API", err.Error())
+				}
 			} else {
 				// Add name only
 				if endpoint != "" {

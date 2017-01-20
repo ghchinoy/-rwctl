@@ -17,6 +17,8 @@ import (
 	"strings"
 
 	"github.com/ghchinoy/rwctl/control"
+	"github.com/go-swagger/go-swagger/errors"
+	"github.com/ghchinoy/rwctl/cm"
 )
 
 const (
@@ -98,7 +100,7 @@ func AddSpecToDropbox(config control.Configuration, specfilepath string, debug b
 
 	// if non 200, print code
 	if resp.StatusCode != 200 {
-		log.Println(resp.Status)
+		log.Println( resp.Status)
 	}
 	// if debug, show headers and contents
 	if debug {
@@ -106,11 +108,22 @@ func AddSpecToDropbox(config control.Configuration, specfilepath string, debug b
 		control.DebugResponseHeader(resp)
 		log.Printf("%s", b)
 	}
+	if resp.StatusCode == 500 {
+		var f cm.Fault
+		err := json.Unmarshal(b, &f)
+		if err != nil {
+			if debug {
+				log.Println("Couldn't convert to Fault")
+			}
+		}
+		return specresponse, errors.New(500, f.Message + "\nPlease verify the format of the specification file is valid.")
+	}
+
 
 	specresponse, err = dealWithResponse(resp.Header.Get("Content-Type"), b)
 	if err != nil {
 		log.Println("Can't convert response.", err.Error())
-		return specresponse, nil
+		return specresponse, err
 	}
 
 	return specresponse, nil
