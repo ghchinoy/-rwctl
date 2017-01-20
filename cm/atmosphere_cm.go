@@ -201,3 +201,11 @@ type APIDetails struct {
 	Updated         time.Time `json:"Updated"`
 	AvatarURL       string    `json:"AvatarURL"`
 }
+
+//{"faultcode":"server", "faultstring":"The API definition could not be read: [Service Definition parser not found.]"}
+
+// Fault represents a fault error message from the API
+type Fault struct {
+	Code string `json:"faultcode"`
+	Message string `json:"faultstring"`
+}
