@@ -13,6 +13,7 @@ import (
 	"strings"
 
 	"github.com/ghchinoy/rwctl/version"
+	"time"
 )
 
 // Configuration provides a simple struct to hold login info
@@ -168,7 +169,12 @@ func LoginToCM(config Configuration, debug bool) (*http.Client, UserInfo, error)
 	if debug {
 		log.Println("Logging in...")
 	}
-	client := &http.Client{}
+
+	transport := &http.Transport{
+		TLSHandshakeTimeout: 60 * time.Second,
+	}
+
+	client := &http.Client{Transport: transport}
 	var err error
 	jar, err := cookiejar.New(nil)
 	if err != nil {

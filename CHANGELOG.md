@@ -1,9 +1,10 @@
 # Changelog
 
-### 0.2.4 2017018
+### 0.2.4 2017018, 20170207
 
 * Added naming of profile to check with `profile` cmd
 * Better error message in the condition in which an uploaded API spec file is invalid
+* increased TLS Handshake Timeout due to timeouts (unclear origin)
 
 ### 0.2.3 20170118
 
