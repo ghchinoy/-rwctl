@@ -17,8 +17,8 @@ import (
 	"strings"
 
 	"github.com/ghchinoy/rwctl/control"
-	"github.com/go-swagger/go-swagger/errors"
 	"github.com/ghchinoy/rwctl/cm"
+	"errors"
 )
 
 const (
@@ -116,7 +116,7 @@ func AddSpecToDropbox(config control.Configuration, specfilepath string, debug b
 				log.Println("Couldn't convert to Fault")
 			}
 		}
-		return specresponse, errors.New(500, f.Message + "\nPlease verify the format of the specification file is valid.")
+		return specresponse, errors.New("500: " + f.Message + "\nPlease verify the format of the specification file is valid.")
 	}
 
 
